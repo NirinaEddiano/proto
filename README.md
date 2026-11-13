@@ -1,10 +1,10 @@
-﻿# Clair — résumés locaux de documents
+# Clair — résumés locaux de documents
 
 Clair est un site en français qui extrait les PDF textuels, Word `.docx`, `.txt` et Markdown `.md`, puis rédige le résumé avec Qwen 2.5 0.5B exécuté sur cet ordinateur. Aucune clé ni API distante n'est utilisée. Le résumé apparaît dans la page et peut être copié, téléchargé en TXT ou Word, ou imprimé en PDF depuis le navigateur.
 
 ## Installation Windows PowerShell
 
-Python 3.10+ est requis. Crée et active l'environnement du projet :
+Python 3.10+ est requis. Sumy LSA fonctionne sur CPU sans gros mod?le ? t?l?charger. Il s?lectionne des phrases du texte, sans les r??crire : les r?sultats sont rapides et ?vitent les faits invent?s, mais peuvent manquer de transitions et de contexte, surtout dans les romans. Crée et active l'environnement du projet :
 
 ```powershell
 py -m venv .venv
@@ -14,7 +14,6 @@ py -m venv .venv
 Installe PyTorch en version CPU depuis le sélecteur officiel Windows/Pip/CPU : [pytorch.org/get-started/locally](https://pytorch.org/get-started/locally/), puis installe les paquets du projet :
 
 ```powershell
-pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
