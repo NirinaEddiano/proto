@@ -76,7 +76,7 @@ async def summarize(file: UploadFile = File(...), length: str = Form("court")):
     reduction = min(99.9, max(0, round((1 - summary_words / max(source_words, 1)) * 100, 1)))
     return {"filename": filename, "pages": page_count, "characters": len(text), "words": source_words,
             "summary_words": summary_words, "reduction_percent": reduction, "chunks": sections,
-            "model": "Sumy LSA (local, extractif)", "summary": summary}
+            "model": "Traitement local", "summary": summary}
 
 
 @app.post("/api/export/docx")
