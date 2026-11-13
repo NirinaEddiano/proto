@@ -1,0 +1,12 @@
+﻿__pycache__/
+.venv/
+.env
+uploads/
+.model-cache/
+uvicorn.log
+uvicorn-error.log
+resultats/
+_reference_repo/
+*.py[cod]
+.env.*
+!/.env.example
