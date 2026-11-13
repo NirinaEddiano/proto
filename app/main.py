@@ -22,11 +22,7 @@ from app.local_model import summarize_with_sumy, model_status
 MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "250"))
 CHUNK_CHARS = int(os.getenv("CHUNK_CHARS", "36000"))
 ALLOWED_SUFFIXES = {".pdf", ".docx", ".txt", ".md"}
-LENGTHS = {
-    "court": {"label": "Synthétique", "guide": "5 à 7 phrases, environ 130 à 180 mots.", "tokens": 240},
-    "moyen": {"label": "Équilibré", "guide": "environ 300 à 450 mots.", "tokens": 600},
-    "detaille": {"label": "Approfondi", "guide": "environ 700 à 900 mots.", "tokens": 1100},
-}
+LENGTHS = {"court", "moyen", "detaille"}
 app = FastAPI(title="Clair — résumés locaux")
 
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import re
 
 
@@ -18,7 +19,7 @@ class FrenchTokenizer:
         text = re.sub(r"\s+", " ", paragraph).strip()
         if not text:
             return ()
-        parts = re.split(r"(?<=[.!??])\s+(?=[A-Z?-??-?0-9?\"?])", text)
+        parts = re.split(r"(?<=[.!?\u2026])\s+(?=[A-Z\u00c0-\u00de0-9\u00ab\"\u201c])", text)
         return tuple(part.strip() for part in parts if part.strip())
 
     def to_words(self, sentence: str) -> tuple[str, ...]:
@@ -35,9 +36,9 @@ def summarize_with_sumy(text: str, length: str) -> tuple[str, int]:
 
     limits = {"court": (5, 3), "moyen": (12, 5), "detaille": (24, 8)}
     if length not in limits:
-        raise ValueError("Longueur de r?sum? non reconnue.")
+        raise ValueError("Longueur de resume non reconnue.")
     final_count, per_section = limits[length]
-    chunks = split_text(text, 36000)
+    chunks = split_text(text, int(os.getenv("CHUNK_CHARS", "36000")))
     tokenizer, stemmer = FrenchTokenizer(), Stemmer("french")
     summaries = []
     for chunk in chunks:
@@ -55,7 +56,7 @@ def summarize_with_sumy(text: str, length: str) -> tuple[str, int]:
         except (ValueError, ZeroDivisionError):
             summaries.extend(sentences[:per_section])
     if not summaries:
-        raise ValueError("Aucune phrase exploitable n?a ?t? trouv?e dans ce document.")
+        raise ValueError("Aucune phrase exploitable n'a ete trouvee dans ce document.")
     if len(summaries) > final_count:
         parser = PlaintextParser.from_string("\n".join(summaries), tokenizer)
         summarizer = LsaSummarizer(stemmer)
